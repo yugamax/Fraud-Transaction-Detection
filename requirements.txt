@@ -6,3 +6,5 @@ xgboost
 scikit-learn
 pandas
 numpy
+python-dateutil
+python-multipart
