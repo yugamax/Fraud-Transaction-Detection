@@ -36,6 +36,12 @@ def changes_in_dataset(label, data):
     df.loc[len(df)] = new_row
     df.to_csv(r"dataset\cleaned_dataset.csv", index=False)
 
+def encoding(encoder, val):
+    try:
+        return encoder.transform([val])[0]
+    except ValueError:
+        return encoder.transform(['missing'])[0]
+
 @app.api_route("/ping", methods=["GET", "HEAD"])
 async def ping():
     await asyncio.sleep(0.1)
@@ -49,8 +55,8 @@ async def predict(data: Transaction_data):
         print("Missing features. Expected 18 features.")
         return {"ML error": "Missing features. Expected 18 features."}
 
-    data[-2] = enc1.transform(str([data[-2]]))[0]
-    data[-1] = enc2.transform(str([data[-1]]))[0]
+    data[-2] = encoding(enc1, data[-2])
+    data[-1] = encoding(enc2, data[-1])
 
     input_data = np.array(data).reshape(1, -1)
     prediction = model.predict(input_data)[0]
