@@ -22,22 +22,22 @@ class Trans_data(BaseModel):
     features: list[float]
 
 @app.post("/predict")
-def predict(data: Trans_data):
-    print(data)
-    print(data.features)
+async def predict(data: Trans_data):
+
     if len(data.features) != 18:
-        return {"error": "Missing features. Expected 18 features."}
+        return {"ML error": "Missing features. Expected 18 features."}
 
     input_data = np.array(data.features).reshape(1, -1)
     prediction = model.predict(input_data)[0]
 
+    
     label = "Fraud" if prediction == 1 else "Non - Fraud"
     print(f"Prediction: {prediction}, Label: {label}")
     return {
-        "prediction": int(prediction),
+        "prediction": float(prediction),
         "label": label
     }
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    uvicorn.run(app, host="127.0.0.1", port=port)
