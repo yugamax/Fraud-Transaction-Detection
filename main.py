@@ -3,7 +3,9 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import classification_report
 from xgboost import XGBClassifier
+import warnings
 
+warnings.filterwarnings("ignore")
 
 df = pd.read_csv(r"dataset\transaction_recs.csv")
 
