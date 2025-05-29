@@ -48,7 +48,7 @@ async def predict(data: Transaction_data):
     prediction = model.predict(input_data)[0]
     confidence = model.predict_proba(input_data)[0][prediction]
 
-    if prediction == 1 & confidence > 0.75:
+    if prediction == 1 and confidence > 0.75:
         label = "Fraud"
         fr_type = "Unsafe Transaction"
         row_exists = ((df.iloc[:, 2:20] == data).all(axis=1)).any()
@@ -58,7 +58,7 @@ async def predict(data: Transaction_data):
             print("Row is not present in the dataset so updating the csv file.")
             changes_in_dataset(label, data)
 
-    elif confidence > 0.55 & confidence < 0.70:
+    elif confidence > 0.55 and confidence < 0.75:
         label = "Non - Fraud"
         fr_type = "Mildly Unsafe Transaction"
 
