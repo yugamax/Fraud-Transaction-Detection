@@ -34,7 +34,7 @@ class Transaction_data(BaseModel):
 def changes_in_dataset(label, data):
     new_row = [len(df)] + [label] + list(data) + [datetime.now().strftime("%d-%m-%Y %H:%M:%S")]
     df.loc[len(df)] = new_row
-    df.to_csv(r"dataset\cleaned_dataset.csv", index=False)
+    df.to_csv(os.path.join("dataset", "cleaned_dataset.csv"), index=False)
 
 def encoding(encoder, val):
     try:
@@ -84,13 +84,13 @@ async def predict(data: Transaction_data):
             label = "Fraud"
             fr_type = "Unsafe Transaction"
             df2 = df2[df2["IDs"] != acc_holder]
-            df2.to_csv(r"dataset/mildly_unsafe_transactions.csv", index=False)
+            df2.to_csv(os.path.join("dataset", "mildly_unsafe_transactions.csv"), index=False)
             changes_in_dataset(prediction, data1)
         else:
             print("Putting the mildly unsafe transaction into monitoring dataset.")
             new_row2 = [len(df2)] + [acc_holder] + [datetime.now().strftime("%d-%m-%Y %H:%M:%S")]
             df2.loc[len(df2)] = new_row2
-            df2.to_csv(r"dataset/mildly_unsafe_transactions.csv", index=False)
+            df2.to_csv(os.path.join("dataset", "mildly_unsafe_transactions.csv"), index=False)
     else:
         label = "Non - Fraud"
         fr_type = "Safe Transaction"

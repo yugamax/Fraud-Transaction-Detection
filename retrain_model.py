@@ -4,19 +4,20 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import classification_report
 from xgboost import XGBClassifier
+import os
 import joblib
 import warnings
 
 warnings.filterwarnings("ignore")
 
-df = pd.read_csv(r"dataset\cleaned_dataset.csv")
+df = pd.read_csv(os.path.join("dataset", "cleaned_dataset.csv"))
 df = df.replace(r'^\s*$', np.nan, regex=True)
 df = df.fillna(df.median(numeric_only=True))
 df = df.replace("missing", np.nan)
 df['ERC20 most sent token type'] = df['ERC20 most sent token type'].fillna('missing').astype(str)
 df['ERC20_most_rec_token_type'] = df['ERC20_most_rec_token_type'].fillna('missing').astype(str)
 
-df.to_csv(r"dataset\cleaned_dataset.csv", index=False)
+df.to_csv(os.path.join("dataset", "cleaned_dataset.csv"), index=False)
 
 enc1 = LabelEncoder()
 df['ERC20 most sent token type'] = enc1.fit_transform(df['ERC20 most sent token type'])
@@ -42,4 +43,4 @@ print(f"\nAccuracy of model : {model.score(x_test, y_test)*100:.2f} %")
 
 pack = {'model': model,'enc1': enc1,'enc2': enc2}
 
-joblib.dump(pack , r"model/models.joblib")
+joblib.dump(pack , os.path.join("model", "models.joblib"))
