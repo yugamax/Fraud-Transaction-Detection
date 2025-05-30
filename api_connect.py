@@ -19,7 +19,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-pack = joblib.load(r"model\models.joblib")
+pack = joblib.load(os.path.join("model", "models.joblib"))
 model = pack['model']
 enc1 = pack['enc1']
 enc2 = pack['enc2']
