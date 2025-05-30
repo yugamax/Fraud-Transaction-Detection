@@ -25,7 +25,7 @@ enc1 = pack['enc1']
 enc2 = pack['enc2']
 
 df = pd.read_csv(r"dataset\cleaned_dataset.csv")
-df2 = pd.read_csv(r"dataset/mildly_unsafe_transactions.csv")
+df2 = pd.read_csv(r"dataset\mildly_unsafe_transactions.csv")
 
 class Transaction_data(BaseModel):
     acc_holder: str
@@ -38,6 +38,8 @@ def changes_in_dataset(label, data):
 
 def encoding(encoder, val):
     try:
+        if pd.isna(val) or val == "":
+            val = "missing"
         return encoder.transform([val])[0]
     except ValueError:
         return encoder.transform(['missing'])[0]
@@ -50,27 +52,30 @@ async def ping():
 @app.post("/predict")
 async def predict(data: Transaction_data):
     acc_holder = data.acc_holder
-    data1=data.features
-    if len(data1) != 18:
+    data1 = data.features
+    data1 = ["missing" if pd.isna(x) else x for x in data1]
+    print(data1)
+    data2 = data1.copy()
+    if len(data2) != 18:
         print("Missing features. Expected 18 features.")
         return {"ML error": "Missing features. Expected 18 features."}
 
-    data1[-2] = encoding(enc1, data1[-2])
-    data1[-1] = encoding(enc2, data1[-1])
+    data2[-2] = encoding(enc1, data2[-2])
+    data2[-1] = encoding(enc2, data2[-1])
 
-    input_data = np.array(data1).reshape(1, -1)
+    input_data = np.array(data2).reshape(1, -1)
     prediction = model.predict(input_data)[0]
     confidence = model.predict_proba(input_data)[0][prediction]
 
     if prediction == 1 and confidence > 0.85:
         label = "Fraud"
         fr_type = "Unsafe Transaction"
-        row_exists = ((df.iloc[:, 2:20] == data.features).all(axis=1)).any()
+        row_exists = ((df.iloc[:, 2:20] == data1).all(axis=1)).any()
         if row_exists:
             print("Row is present in the dataset so no changes made.")
         else:
             print("Row is not present in the dataset so updating the csv file.")
-            changes_in_dataset(prediction, data.features)
+            changes_in_dataset(prediction, data1)
 
     elif confidence > 0.65 and confidence < 0.85:
         label = "Non - Fraud"
@@ -81,7 +86,7 @@ async def predict(data: Transaction_data):
             fr_type = "Unsafe Transaction"
             df2 = df2[df2["IDs"] != acc_holder]
             df2.to_csv(r"dataset/mildly_unsafe_transactions.csv", index=False)
-            changes_in_dataset(prediction, data.features)
+            changes_in_dataset(prediction, data1)
         else:
             print("Putting the mildly unsafe transaction into monitoring dataset.")
             new_row2 = [len(df2)] + [acc_holder] + [datetime.now().strftime("%d-%m-%Y %H:%M:%S")]

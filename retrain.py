@@ -11,16 +11,18 @@ warnings.filterwarnings("ignore")
 
 df = pd.read_csv(r"dataset\cleaned_dataset.csv")
 df = df.replace(r'^\s*$', np.nan, regex=True)
-
+df = df.fillna(df.median(numeric_only=True))
+df = df.replace("missing", np.nan)
 df['ERC20 most sent token type'] = df['ERC20 most sent token type'].fillna('missing').astype(str)
+df['ERC20_most_rec_token_type'] = df['ERC20_most_rec_token_type'].fillna('missing').astype(str)
+
+df.to_csv(r"dataset\cleaned_dataset.csv", index=False)
+
 enc1 = LabelEncoder()
 df['ERC20 most sent token type'] = enc1.fit_transform(df['ERC20 most sent token type'])
 
-df['ERC20_most_rec_token_type'] = df['ERC20_most_rec_token_type'].fillna('missing').astype(str)
 enc2 = LabelEncoder()
 df['ERC20_most_rec_token_type'] = enc2.fit_transform(df['ERC20_most_rec_token_type'])
-
-df = df.fillna(df.median())
 
 x = df.iloc[:,2:20]
 y= df.iloc[:,1]
