@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          persist-credentials: true
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -34,8 +36,5 @@ jobs:
           git add model/ dataset/cleaned_dataset.csv
           git commit -m "auto-retrained model" || echo "No changes to commit"
           git push
-      - name: Checkout code
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: true
+        
 
