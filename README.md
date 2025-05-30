@@ -1,37 +1,36 @@
-Certainly! Based on your request, here's the corrected `README.md` file for the [Fraud-Transaction-Detection](https://github.com/yugamax/Fraud-Transaction-Detection) repository:
 
 ---
 
-# Fraud Transaction Detection
+# 🕵️‍♂️ Fraud Transaction Detection
 
 Detects fraudulent transactions made through Ethereum.
 
-## Table of Contents
+## 📚 Table of Contents
 
-* [Overview](#overview)
-* [Project Structure](#project-structure)
-* [Installation](#installation)
-* [Usage](#usage)
-* [Contributing](#contributing)
-* [License](#license)
+* [📖 Overview](#-overview)
+* [🗂️ Project Structure](#-project-structure)
+* [💾 Installation](#-installation)
+* [🚀 Usage](#-usage)
+* [🤝 Contributing](#-contributing)
+* [📝 License](#-license)
 
-## Overview
+## 📖 Overview
 
 This project focuses on detecting fraudulent transactions within the Ethereum blockchain. By leveraging machine learning techniques, it aims to identify and flag suspicious activities, enhancing the security and integrity of blockchain-based financial systems.
 
-## Project Structure
+## 🗂️ Project Structure
 
 The repository is organized as follows:
 
-* **`dataset/`**: Contains the datasets used for training and evaluating the fraud detection models.
-* **`model/`**: Stores the trained machine learning models and related artifacts.
-* **`.github/workflows/`**: Includes GitHub Actions workflows for continuous integration and deployment.
-* **`api_connect.py`**: Script to connect and interact with the Ethereum network or APIs.
-* **`retrain_model.py`**: Script to retrain the machine learning model with new data.
-* **`requirements.txt`**: Lists all Python dependencies required to run the project.
-* **`README.md`**: Provides an overview and documentation of the project.
+* 📁 **`dataset/`**: Contains the datasets used for training and evaluating the fraud detection models.
+* 🤖 **`model/`**: Stores the trained machine learning models and related artifacts.
+* ⚙️ **`.github/workflows/`**: Includes GitHub Actions workflows for continuous integration and deployment.
+* 🔌 **`api_connect.py`**: Script to connect and interact with the Ethereum network or APIs.
+* 🔁 **`retrain_model.py`**: Script to retrain the machine learning model with new data.
+* 📄 **`requirements.txt`**: Lists all Python dependencies required to run the project.
+* 📝 **`README.md`**: Provides an overview and documentation of the project.
 
-## Installation
+## 💾 Installation
 
 To set up the project locally, follow these steps:
 
@@ -55,7 +54,7 @@ To set up the project locally, follow these steps:
    pip install -r requirements.txt
    ```
 
-## Usage
+## 🚀 Usage
 
 1. **Connecting to the Ethereum Network**:
 
@@ -75,7 +74,7 @@ To set up the project locally, follow these steps:
 
 *Note*: Specific implementation details, such as data preprocessing steps, model architecture, and evaluation metrics, are not provided in the repository. Users may need to customize these components based on their specific requirements.
 
-## Contributing
+## 🤝 Contributing
 
 Contributions are welcome! If you'd like to contribute:
 
@@ -101,10 +100,9 @@ Contributions are welcome! If you'd like to contribute:
 
 5. Open a pull request detailing your changes.
 
-## License
+## 📝 License
 
 This project is open-source. Please check the repository for license details.
 
 ---
 
-Feel free to customize this `README.md` further to align with any additional details or specific instructions pertinent to your project.
