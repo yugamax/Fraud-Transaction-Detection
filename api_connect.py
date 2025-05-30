@@ -54,7 +54,6 @@ async def predict(data: Transaction_data):
     acc_holder = data.acc_holder
     data1 = data.features
     data1 = ["missing" if pd.isna(x) else x for x in data1]
-    print(data1)
     data2 = data1.copy()
     if len(data2) != 18:
         print("Missing features. Expected 18 features.")
