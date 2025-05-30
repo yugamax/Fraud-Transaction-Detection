@@ -24,8 +24,8 @@ model = pack['model']
 enc1 = pack['enc1']
 enc2 = pack['enc2']
 
-df = pd.read_csv(r"dataset\cleaned_dataset.csv")
-df2 = pd.read_csv(r"dataset\mildly_unsafe_transactions.csv")
+df = pd.read_csv(os.path.join("dataset", "cleaned_dataset.csv"))
+df2 = pd.read_csv(os.path.join("dataset", "mildly_unsafe_transactions.csv"))
 
 class Transaction_data(BaseModel):
     acc_holder: str
