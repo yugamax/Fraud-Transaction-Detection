@@ -96,6 +96,7 @@ async def predict(data: Transaction_data):
         fr_type = "Safe Transaction"
     
     print(f"Confidence: {confidence*100:.2f}%")
+    print(data1)
 
     return {
         "prediction": label,
