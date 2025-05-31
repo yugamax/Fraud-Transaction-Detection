@@ -24,8 +24,6 @@ model = pack['model']
 enc1 = pack['enc1']
 enc2 = pack['enc2']
 
-df = pd.read_csv(os.path.join("dataset", "cleaned_dataset.csv"))
-
 class Transaction_data(BaseModel):
     acc_holder: str
     features: list[Union[float , str]]
