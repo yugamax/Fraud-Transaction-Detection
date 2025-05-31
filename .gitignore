@@ -1,0 +1,4 @@
+# .gitignore
+.github/
+retrain_model.py
+dataset/cleaned_dataset.csv
