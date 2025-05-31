@@ -30,11 +30,6 @@ class Transaction_data(BaseModel):
     acc_holder: str
     features: list[Union[float , str]]
 
-def changes_in_dataset(label, data):
-    new_row = [len(df)] + [label] + list(data) + [datetime.now().strftime("%d-%m-%Y %H:%M:%S")]
-    df.loc[len(df)] = new_row
-    df.to_csv(os.path.join("dataset", "cleaned_dataset.csv"), index=False)
-
 def encoding(encoder, val):
     try:
         if pd.isna(val) or val == "":
@@ -65,17 +60,11 @@ async def predict(data: Transaction_data):
     prediction = model.predict(input_data)[0]
     confidence = model.predict_proba(input_data)[0][prediction]
 
-    if prediction == 1 and confidence > 0.85:
+    if prediction == 1 and confidence > 0.8:
         label = "Fraud"
         fr_type = "Unsafe Transaction"
-        row_exists = ((df.iloc[:, 2:20] == data1).all(axis=1)).any()
-        if row_exists:
-            print("Row is present in the dataset so no changes made.")
-        else:
-            print("Row is not present in the dataset so updating the csv file.")
-            changes_in_dataset(prediction, data1)
 
-    elif confidence > 0.65 and confidence < 0.85:
+    elif confidence > 0.6 and confidence < 0.8:
         label = "Non - Fraud"
         fr_type = "Mildly Unsafe Transaction"
         df2 = pd.read_csv(os.path.join("dataset", "mildly_unsafe_transactions.csv"))
