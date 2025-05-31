@@ -95,13 +95,13 @@ async def predict(data: Transaction_data):
         fr_type = "Safe Transaction"
     
     print(f"Confidence: {confidence*100:.2f}%")
-    print(data1)
 
     return {
         "prediction": label,
-        "Type": fr_type
+        "Type": fr_type,
+        "confidence": f"{confidence*100:.2f}%"
         }
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
-    uvicorn.run(app, host="127.0.0.1", port=port)
+    uvicorn.run(app, host="0.0.0.0", port=port)
