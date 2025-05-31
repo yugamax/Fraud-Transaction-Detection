@@ -82,9 +82,6 @@ async def predict(data: Transaction_data):
         if acc_holder in df2["IDs"].values:
             label = "Fraud"
             fr_type = "Unsafe Transaction"
-            df2 = df2[df2["IDs"] != acc_holder]
-            df2.to_csv(os.path.join("dataset", "mildly_unsafe_transactions.csv"), index=False)
-            changes_in_dataset(prediction, data1)
         else:
             print("Putting the mildly unsafe transaction into monitoring dataset.")
             new_row2 = [len(df2)] + [acc_holder] + [datetime.now().strftime("%d-%m-%Y %H:%M:%S")]
