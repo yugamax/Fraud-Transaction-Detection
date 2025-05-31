@@ -25,7 +25,6 @@ enc1 = pack['enc1']
 enc2 = pack['enc2']
 
 df = pd.read_csv(os.path.join("dataset", "cleaned_dataset.csv"))
-df2 = pd.read_csv(os.path.join("dataset", "mildly_unsafe_transactions.csv"))
 
 class Transaction_data(BaseModel):
     acc_holder: str
@@ -79,7 +78,7 @@ async def predict(data: Transaction_data):
     elif confidence > 0.65 and confidence < 0.85:
         label = "Non - Fraud"
         fr_type = "Mildly Unsafe Transaction"
-
+        df2 = pd.read_csv(os.path.join("dataset", "mildly_unsafe_transactions.csv"))
         if acc_holder in df2["IDs"].values:
             label = "Fraud"
             fr_type = "Unsafe Transaction"
@@ -105,4 +104,4 @@ async def predict(data: Transaction_data):
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
-    uvicorn.run(app, host="0.0.0.0", port=port)
+    uvicorn.run(app, host="127.0.0.1", port=port)
